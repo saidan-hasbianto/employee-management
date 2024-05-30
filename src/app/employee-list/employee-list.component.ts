@@ -12,34 +12,66 @@ interface Employee {
   styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent {
-  employees: Employee[] = [
-    { id: 1, name: 'John Doe', position: 'Developer' },
-    { id: 2, name: 'Jane Smith', position: 'Designer' }
+  employees = [
+    {
+      username: 'jdoe',
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'jdoe@example.com',
+      birthDate: new Date(1990, 1, 1),
+      basicSalary: 50000,
+      status: 'Active',
+      group: 'A',
+      description: 'Senior Developer'
+    },
+    // Tambahkan data employee lainnya di sini
   ];
 
-  addEmployee() {
-    const newId = this.employees.length ? Math.max(...this.employees.map(e => e.id)) + 1 : 1;
-    const newName = prompt('Enter employee name:');
-    const newPosition = prompt('Enter employee position:');
+  isAddEmployeeFormVisible = false;
 
-    if (newName && newPosition) {
-      this.employees.push({ id: newId, name: newName, position: newPosition });
-    }
+  newEmployee = {
+    username: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    birthDate: '',
+    basicSalary: 0,
+    status: '',
+    group: '',
+    description: ''
+  };
+
+  showAddEmployeeForm() {
+    this.isAddEmployeeFormVisible = true;
   }
 
-  editEmployee(employee: Employee) {
-    const newName = prompt('Edit employee name:', employee.name);
-    const newPosition = prompt('Edit employee position:', employee.position);
-
-    if (newName !== null && newPosition !== null) {
-      employee.name = newName;
-      employee.position = newPosition;
-    }
+  hideAddEmployeeForm() {
+    this.isAddEmployeeFormVisible = false;
   }
 
-  deleteEmployee(employee: Employee) {
+  onSubmit() {
+    this.employees.push({...this.newEmployee, birthDate: new Date(this.newEmployee.birthDate)});
+    this.newEmployee = {
+      username: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      birthDate: '',
+      basicSalary: 0,
+      status: '',
+      group: '',
+      description: ''
+    };
+    this.isAddEmployeeFormVisible = false;
+  }
+
+  editEmployee(employee :any) {
+    // Logika untuk mengedit employee
+  }
+
+  deleteEmployee(employee:any) {
     const index = this.employees.indexOf(employee);
-    if (index !== -1) {
+    if (index > -1) {
       this.employees.splice(index, 1);
     }
   }
