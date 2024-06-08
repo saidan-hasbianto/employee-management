@@ -1,13 +1,13 @@
 <div class="employee-list-container">
   <h2>Employee List</h2>
-  <button routerLink="/employees/new" class="add-button">Add Employee</button>
+  <button mat-button routerLink="/employee/new" class="add-button">Add Employee</button>
 
   <div class="filter-container">
-    <mat-form-field appearance="fill">
-      <mat-label>Search</mat-label>
-      <input matInput (keyup)="applyFilter()" placeholder="Search" #input>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search" class="search-input">
+  </div>
+
+  <div class="paging-container">
+    <mat-form-field>
       <mat-label>Rows per page</mat-label>
       <mat-select [(value)]="pageSize" (selectionChange)="applyPaging()">
         <mat-option *ngFor="let size of [5, 10, 25, 100]" [value]="size">{{ size }}</mat-option>
@@ -15,8 +15,8 @@
     </mat-form-field>
   </div>
 
-  <table mat-table [dataSource]="dataSource" matSort>
-
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <!-- Columns definitions -->
     <ng-container matColumnDef="username">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
       <td mat-cell *matCellDef="let employee"> {{ employee.username }} </td>
@@ -65,7 +65,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let employee">
-        <button mat-button routerLink="/employees/detail/{{employee.id}}" class="edit-button">Edit</button>
+        <button mat-button (click)="editEmployee(employee)" class="edit-button">Edit</button>
         <button mat-button (click)="deleteEmployee(employee)" class="delete-button">Delete</button>
       </td>
     </ng-container>

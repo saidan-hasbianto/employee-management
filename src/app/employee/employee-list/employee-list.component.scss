@@ -3,7 +3,13 @@
 }
 
 .add-button {
+  background-color: skyblue;
   margin-bottom: 20px;
+  color: black;
+}
+
+.add-button:hover {
+  background-color: blue; /* Warna merah lebih gelap */
 }
 
 .filter-container {
@@ -30,4 +36,22 @@ td.mat-cell, th.mat-header-cell {
 
 .mat-paginator {
   margin-top: 20px;
+}
+
+.edit-button {
+  background-color: #FFC107; /* Warna kuning */
+  color: white;
+}
+
+.delete-button {
+  background-color: #F44336; /* Warna merah */
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #FFB300; /* Warna kuning lebih gelap */
+}
+
+.delete-button:hover {
+  background-color: #E53935; /* Warna merah lebih gelap */
 }

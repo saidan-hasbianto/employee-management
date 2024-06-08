@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
+import * as datadummy from '../../../dummy-employees.json';
 
 @Component({
   selector: 'app-employee-list',
@@ -20,16 +19,26 @@ export class EmployeeListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private employeeService: EmployeeService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private svc: EmployeeService
+
+  ) {
     this.dataSource = new MatTableDataSource<Employee>([]);
-   }
+  }
 
   ngOnInit(): void {
-    this.employeeService.getEmployees().subscribe(data => {
-      this.dataSource.data = data;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    console.log('disiniiiiiiiiiiiii', datadummy);
+    // this.dataSource.data = (datadummy as any).default; 
+    this.dataSource.data = (this.svc.getData() as any).default;
+    this.cdr.detectChanges();
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator; // For pagination
+    this.dataSource.sort = this.sort; // For sort
   }
 
   applyFilter(event: Event) {
@@ -42,18 +51,17 @@ export class EmployeeListComponent implements OnInit {
   }
 
   applyPaging() {
-    this.dataSource.paginator._changePageSize(this.pageSize);
+    if (this.paginator) {
+      this.paginator.pageSize = this.pageSize;
+      this.paginator.firstPage();
+    }
   }
 
   deleteEmployee(employee: Employee) {
     this.dataSource.data = this.dataSource.data.filter(e => e !== employee);
   }
 
-  editEmployee(employee :any) {
+  editEmployee(employee: any) {
     // Logika untuk mengedit employee
-  }
-
-  deleteEmployee(employee:any) {
-    
   }
 }

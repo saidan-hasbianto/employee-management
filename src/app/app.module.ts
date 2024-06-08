@@ -18,23 +18,13 @@ import { LoginComponent } from './login/login.component';
 import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { EmployeeDetailComponent } from './employee/employee-detail/employee-detail.component';
-import { EmployeeNewComponent } from './employee/models/employee-new/employee-new.component';
+import { EmployeeNewComponent } from './employee/employee-new/employee-new.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { EmployeeComponent } from './employee/employee.component';
 import { EmployeeModule } from './employee/employee.module';
+import { AppRoutingModule } from './app-routing.module';
 
-const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent }, {
-    path: 'employees', component: EmployeeListComponent, children: [
-      { path: '', redirectTo: 'list', pathMatch: 'full' },
-      { path: 'list', component: EmployeeListComponent },
-      { path: 'new', component: EmployeeNewComponent },
-      { path: 'detail/:id', component: EmployeeDetailComponent },
-    ]
-  }
-];
 
 @NgModule({
   declarations: [
@@ -57,7 +47,7 @@ const routes: Routes = [
     MatExpansionModule,
     EmployeeModule,
     MatSidenavModule,
-    RouterModule.forRoot(routes)
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

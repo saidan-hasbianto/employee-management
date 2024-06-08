@@ -17,7 +17,7 @@ export class LoginComponent {
     const hardcodedPassword = 'password';
 
     if (this.username === hardcodedUsername && this.password === hardcodedPassword) {
-      this.router.navigate(['/employee-list']);
+      this.router.navigate(['/employee']);
     } else {
       alert('Invalid credentials');
     }
